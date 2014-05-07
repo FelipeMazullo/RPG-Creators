@@ -68,7 +68,6 @@
      <Compile Include="Assets\Scripts\Field\EventManager.cs" />
      <Compile Include="Assets\Scripts\Field\FieldEnemy.cs" />
      <Compile Include="Assets\Scripts\Field\Interactable_Controller.cs" />
-     <Compile Include="Assets\Scripts\Field\Menu.cs" />
      <Compile Include="Assets\Scripts\Field\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\Field\PlayerCollisionDetection.cs" />
      <Compile Include="Assets\Scripts\Field\PlayerOverworldController.cs" />

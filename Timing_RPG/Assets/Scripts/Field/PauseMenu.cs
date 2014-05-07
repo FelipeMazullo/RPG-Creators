@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PauseMenu : MonoBehaviour {
 
 	PlayerOverworldController player;
-	float left = Screen.width/2;
-	float top = Screen.height/2;
-	float width = 120;
-	float height = 200;
-	bool buttonMenu;
+	float left = Screen.width/2-300;
+	float top = Screen.height/2-300;
+	float width = 600;
+	float height = 400;
+	bool buttonMenu;//Tells me if the menu button was pressed
 	bool menuON;
 	bool mainSelected;//IF IT'S ON THE MAIN MENU
-	bool optionSelected;//IF IT'S ON THE OPTION MENU
+	bool optionsSelected;//IF IT'S ON THE OPTION MENU
 	GUIStyle font;
 	public Texture cursor;
-	int numberMenuOptions = 3; // CHANGE HERE HOW MANY MENU OPTIONS WE HAVE
+	int numberMenuOptions;
 	int cursorPosition;
+	int menuLayer;//1 = Main menu, 2 = Inside a category, 3 = Inside a subcategory, and so on
+	Dictionary <int,string> menus;//KEEPS ALL THE MENU CATEGORIES
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +27,13 @@ public class PauseMenu : MonoBehaviour {
 		font = new GUIStyle();
 		font.fontSize = 14;
 		cursorPosition = 1;
+		menus = new Dictionary<int,string> ();
+		menus.Add (1,"RESUME GAME");
+		menus.Add (2,"STATUS");
+		menus.Add (3,"OPTIONS");
+		menus.Add (4,"QUIT GAME");
+		numberMenuOptions = menus.Count;
+		menuLayer = 1;
 	}
 	
 	// Update is called once per frame
@@ -31,31 +41,40 @@ public class PauseMenu : MonoBehaviour {
 
 		pause();
 		cursorMenuMovement ();
-		//menuSelection ();
+		menuSelection ();
 
 	}
 
 
 	public void menuSelection(){//CHECKS WHICH OPTION IS SELECTED IN THE MENU
-		if(menuON&&Input.GetKeyDown (KeyCode.Return)){
-			if(cursorPosition==2){
-				optionSelected = true;
+		if(mainSelected&&Input.GetKeyDown (KeyCode.Space)){
+			if(cursorPosition==3){
+				optionsSelected = true;
 				mainSelected = false;
-
+				menuLayer++;
+				cursorPosition=1;
+			}
+		}
+		if (menuLayer == 2 && Input.GetKeyDown (KeyCode.LeftShift)) {//RETURNING FROM SECOND MENU LAYER
+			if(optionsSelected){
+				menuLayer--;
+				optionsSelected = false;
+				mainSelected = true;
+				cursorPosition=3;
 			}
 		}
 	}
 
 	public void cursorMenuMovement(){
-		//KEEPS TRACK OF THE CURSOR MOVEMENT IN THE MENU
-		if (menuON&&Input.GetKeyDown (KeyCode.UpArrow)) {
+		//KEEPS TRACK OF THE CURSOR MOVEMENT IN THE MAIN MENU
+		if (mainSelected&&Input.GetKeyDown (KeyCode.UpArrow)) {
 			if(cursorPosition>1)
 				cursorPosition--;
 			else
 				if(cursorPosition==1)
 					cursorPosition = numberMenuOptions;
 		}
-		if (menuON&&Input.GetKeyDown(KeyCode.DownArrow)) {
+		if (mainSelected&&Input.GetKeyDown(KeyCode.DownArrow)) {
 			if(cursorPosition<numberMenuOptions)
 				cursorPosition++;
 			else
@@ -67,7 +86,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void pause(){
 		//VERIFIES IF THE PAUSE BUTTON IS PRESSED, IF IT IS THEN IT PAUSES THE GAME
-		if(Input.GetKeyDown(KeyCode.Escape)){
+		if(Input.GetKeyDown(KeyCode.Return)){
 			if(buttonMenu == false){
 				buttonMenu = true;
 				mainSelected = true;
@@ -81,7 +100,7 @@ public class PauseMenu : MonoBehaviour {
 				mainSelected = false;
 				player.setState("Idle");
 				Time.timeScale = 1.0f;
-				menuON = false;
+
 				
 			}
 		}
@@ -91,14 +110,18 @@ public class PauseMenu : MonoBehaviour {
 
 	//SHOWS IN-GAME PAUSE MENU
 	void OnGUI(){
-		if(buttonMenu&&mainSelected){
-			menuON = true;
-			GUI.Box (new Rect(left, top, width, height),"");//DRAWS THE TEXT BOX
+		if(buttonMenu && mainSelected){//MAIN MENU----------------------
+			GUI.Box (new Rect(left, top, width, height),"");//DRAWS THE MAIN MENU BOX
 			GUI.Label(new Rect(left+(width/4), top, width, font.fontSize),"MAIN MENU",font);
-			GUI.Label(new Rect(left, top+font.fontSize, width, font.fontSize),"RESUME GAME",font);//POSITION = 1
-			GUI.Label(new Rect(left, top+2*font.fontSize, width, font.fontSize),"OPTIONS",font);//POSITION = 2
-			GUI.Label(new Rect(left, top+3*font.fontSize, width, font.fontSize),"QUIT GAME",font);//POSITION = 3
+			foreach(KeyValuePair<int,string>menu in menus){
+				GUI.Button(new Rect(left, top + menu.Key*font.fontSize, width, font.fontSize),menu.Value,font);
+
+			}
 			GUI.DrawTexture(new Rect(left-32,top+ cursorPosition*font.fontSize,32,32),cursor);//DRAWS THE CURSOR
+		}
+		if (buttonMenu && optionsSelected) {//OPTIONS MENU----------------------
+			GUI.Box (new Rect(left, top, width, height),"");//DRAWS THE MAIN MENU BOX
+			GUI.Label(new Rect(left+(width/4), top, width, font.fontSize),"OPTIONS MENU",font);
 		}
 	}
 }
