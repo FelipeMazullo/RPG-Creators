@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Dialogs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Dialogue>
+		<Number>1</Number>
+		<Text>The day looks beautiful today, doesn't it?|Uh? So you wanted to know where you are supposed to go?|Take this key and go on ahead to the next room. There are lots of spiders to get rid of!</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>2</Number>
+		<Text>What are you waiting for? Good luck with the spiders!</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>3</Number>
+		<Text>So you got rid of the spiders? Splendid!</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>4</Number>
+		<Text>D</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>5</Number>
+		<Text>E</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>6</Number>
+		<Text>F</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>7</Number>
+		<Text>G</Text>
+	</Dialogue>
+</Dialogs>

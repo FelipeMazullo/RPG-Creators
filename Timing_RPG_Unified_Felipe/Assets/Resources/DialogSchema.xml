@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Dialogs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Dialogue>
+		<Number>1</Number>
+		<Text>a</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>2</Number>
+		<Text>b</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>3</Number>
+		<Text>c</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>4</Number>
+		<Text>d</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>5</Number>
+		<Text>e</Text>
+	</Dialogue>
+	<Dialogue>
+		<Number>6</Number>
+		<Text>f</Text>
+	</Dialogue>
+</Dialogs>
